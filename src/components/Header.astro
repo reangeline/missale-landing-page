@@ -1,0 +1,87 @@
+---
+import type { Content } from '../content/schema';
+import { ANCHORS, pathFor, type Lang, type Page } from '../i18n/routes';
+import LangSwitch from './LangSwitch.astro';
+import StoreButton from './StoreButton.astro';
+
+interface Props {
+  lang: Lang;
+  /** Página atual, para o seletor de idioma levar à equivalente. */
+  page: Page;
+  t: Content;
+}
+
+const { lang, page, t } = Astro.props;
+const home = pathFor(lang);
+const base = page === 'home' ? '' : home;
+const links = [
+  { href: `${base}#${ANCHORS.day}`, label: t.nav.day },
+  { href: `${base}#${ANCHORS.features}`, label: t.nav.features },
+  { href: `${base}#${ANCHORS.privacy}`, label: t.nav.privacy },
+  { href: `${base}#${ANCHORS.pricing}`, label: t.nav.pricing },
+];
+---
+
+<header class="site-header" data-lang={lang}>
+  <div class="container bar">
+    <a class="wordmark" href={home}>Missale</a>
+    <nav class="main-nav ui" aria-label="Missale">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <div class="tools">
+      <LangSwitch lang={lang} page={page} label={t.nav.language} />
+      <div class="store"><StoreButton lang={lang} section="header" compact /></div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--canvas);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: var(--header-h);
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .main-nav {
+    display: flex;
+    gap: 24px;
+    margin-inline: auto 8px;
+  }
+  .main-nav a {
+    text-decoration: none;
+    padding-block: 12px;
+  }
+  .main-nav a:hover {
+    text-decoration: underline;
+  }
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  @media (max-width: 899px) {
+    .main-nav {
+      display: none;
+    }
+  }
+  @media (max-width: 479px) {
+    .store {
+      display: none;
+    }
+  }
+</style>

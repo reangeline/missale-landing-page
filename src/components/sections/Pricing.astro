@@ -1,0 +1,93 @@
+---
+import StoreButton from '../StoreButton.astro';
+import type { Content } from '../../content/schema';
+import { ANCHORS, type Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+
+const { lang, t } = Astro.props;
+const { pricing } = t;
+const plans = [
+  { key: 'free', cls: 'card', ...pricing.free },
+  { key: 'premium', cls: 'card card--feature', ...pricing.premium },
+];
+---
+
+<section id={ANCHORS.pricing} class="section" data-section="Pricing" data-lang={lang}>
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow">{pricing.eyebrow}</p>
+      <h2 class="heading">{pricing.title}</h2>
+      <p class="lead">{pricing.intro}</p>
+    </header>
+
+    <div class="plans">
+      {
+        plans.map((p) => (
+          <article class={`${p.cls} plan`}>
+            <h3 class="subheading">{p.title}</h3>
+            <p class="ui tagline">{p.tagline}</p>
+            <ul role="list" class="items">
+              {p.items.map((i) => <li>{i}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="foot">
+      <p class="trial">{pricing.trial}</p>
+      <p class="ui note">{pricing.priceNote}</p>
+      <StoreButton lang={lang} section="pricing" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: 20px;
+    max-width: 640px;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+  .plans {
+    display: grid;
+    gap: 24px;
+  }
+  .plan {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  .tagline,
+  .note {
+    color: var(--muted);
+  }
+  .items {
+    margin: 12px 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .items li {
+    padding-block: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .items li:last-child {
+    border-bottom: 0;
+  }
+  .foot {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    margin-top: clamp(40px, 6vw, 56px);
+    max-width: 640px;
+  }
+
+  @media (min-width: 760px) {
+    .plans {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

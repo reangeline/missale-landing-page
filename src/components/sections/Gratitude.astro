@@ -1,0 +1,168 @@
+---
+import type { Content } from '../../content/schema';
+import { ANCHORS, type Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+
+const { lang, t } = Astro.props;
+const g = t.gratitude;
+---
+
+<section id={ANCHORS.gratitude} class="section section--deep gratitude" data-section="Gratitude" data-lang={lang}>
+  <div class="container">
+    <div class="gratitude__inner">
+      <p class="eyebrow">{g.eyebrow}</p>
+      <h2 class="heading"><label for="gratitude-text">{g.question}</label></h2>
+
+      <form class="gratitude__form" novalidate data-gratitude-form>
+        <div class="gratitude__stage">
+          <textarea
+            id="gratitude-text"
+            class="gratitude__field"
+            rows="2"
+            maxlength="200"
+            placeholder={g.placeholder}
+            autocomplete="off"
+            data-gratitude-field></textarea>
+          <div class="gratitude__ghost" aria-hidden="true" data-gratitude-ghost></div>
+        </div>
+        <p class="ui gratitude__note">{g.note}</p>
+        <button type="submit" class="btn btn--quiet gratitude__submit">{g.submit}</button>
+      </form>
+
+      <div class="gratitude__result" data-gratitude-result>
+        <p class="gratitude__done" role="status" aria-live="polite" data-gratitude-done data-done={g.done}></p>
+        <button type="button" class="gratitude__again" hidden data-gratitude-again>{g.again}</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gratitude [hidden] { display: none !important; }
+  .gratitude__inner {
+    max-width: 640px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .gratitude .eyebrow { justify-content: center; margin-bottom: 20px; }
+  .gratitude .heading { margin-bottom: 32px; }
+  .gratitude__form { display: flex; flex-direction: column; align-items: center; }
+  .gratitude__stage { position: relative; width: 100%; }
+  .gratitude__field,
+  .gratitude__ghost {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 8px 0 12px;
+    font-family: var(--font-body);
+    font-size: 24px;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .gratitude__field {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--ink);
+    border-radius: 0;
+    resize: none;
+    color: var(--ink);
+  }
+  .gratitude__field::placeholder { color: var(--muted); opacity: 1; }
+  .gratitude__field.is-leaving::placeholder { color: transparent; }
+  .gratitude__ghost {
+    position: absolute;
+    inset: 0;
+    border-bottom: 1px solid transparent;
+    color: var(--ink);
+    white-space: pre-wrap;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .gratitude__ghost.is-fading { animation: gratitude-fade 1.6s ease-out forwards; }
+  .gratitude__note { margin-top: 12px; color: var(--muted); }
+  .gratitude__submit { margin-top: 28px; }
+  .gratitude__result { display: flex; flex-direction: column; align-items: center; }
+  .gratitude__done:not(:empty) { margin-bottom: 24px; }
+  .gratitude__done {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 40px;
+    line-height: 1.1;
+  }
+  .gratitude__again {
+    background: none;
+    border: 0;
+    padding: 4px;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+    cursor: pointer;
+  }
+
+  @keyframes gratitude-fade {
+    from { opacity: 1; transform: translateY(0); letter-spacing: 0; }
+    to { opacity: 0; transform: translateY(-10px); letter-spacing: 0.08em; }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-gratitude-form]');
+  const field = document.querySelector<HTMLTextAreaElement>('[data-gratitude-field]');
+  const ghost = document.querySelector<HTMLElement>('[data-gratitude-ghost]');
+  const done = document.querySelector<HTMLElement>('[data-gratitude-done]');
+  const again = document.querySelector<HTMLButtonElement>('[data-gratitude-again]');
+
+  if (form && field && ghost && done && again) {
+    let timer = 0;
+
+    const finish = () => {
+      window.clearTimeout(timer);
+      ghost.classList.remove('is-fading');
+      ghost.textContent = '';
+      field.classList.remove('is-leaving');
+      form.hidden = true;
+      done.textContent = done.dataset.done ?? '';
+      again.hidden = false;
+      again.focus();
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const text = field.value.trim();
+      if (!text) {
+        field.focus();
+        return;
+      }
+      field.value = '';
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        finish();
+        return;
+      }
+      ghost.textContent = text;
+      field.classList.add('is-leaving');
+      ghost.classList.add('is-fading');
+      ghost.addEventListener('animationend', finish, { once: true });
+      timer = window.setTimeout(finish, 2200);
+    });
+
+    field.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
+        event.preventDefault();
+        form.requestSubmit();
+      }
+    });
+
+    again.addEventListener('click', () => {
+      done.textContent = '';
+      again.hidden = true;
+      form.hidden = false;
+      field.focus();
+    });
+  }
+</script>

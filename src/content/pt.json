@@ -1,0 +1,261 @@
+{
+  "meta": {
+    "title": "Missale: app católico para iPhone e iPad",
+    "description": "Palavra do dia, santo do dia, Terço guiado com voz e uma rotina simples com Deus, de manhã à noite. App católico para iPhone e iPad, em 3 idiomas.",
+    "ogAlt": "Missale, um lugar para refletir e agradecer pelo seu dia, sobre fundo cor de pergaminho."
+  },
+  "nav": {
+    "skip": "Pular para o conteúdo",
+    "day": "Seu dia",
+    "features": "Recursos",
+    "privacy": "Privacidade",
+    "pricing": "Preços",
+    "language": "Idioma"
+  },
+  "cta": {
+    "download": "Baixar na App Store",
+    "soon": "Em breve na App Store",
+    "soonNote": "Para iPhone e iPad."
+  },
+  "hero": {
+    "title": "Um lugar para refletir e agradecer pelo seu dia.",
+    "subtitle": "Palavra, santo e Terço do dia, e uma rotina simples com Deus: manhã, tarde e noite.",
+    "greeting": {
+      "neutral": "Olá",
+      "morning": "Bom dia",
+      "afternoon": "Boa tarde",
+      "night": "Boa noite"
+    },
+    "line": {
+      "neutral": "Manhã, tarde e noite: um dia com Deus.",
+      "morning": "Comece oferecendo o dia e abrindo a Palavra de hoje.",
+      "afternoon": "Faça uma pausa para dizer como você está.",
+      "night": "Reveja o dia e agradeça."
+    },
+    "video": {
+      "caption": "Vídeo sem som, de 25 segundos, que mostra o app em uso: a tela Hoje, o check-in \"Hoje eu estou…\" com a resposta e o Exame da noite.",
+      "play": "Reproduzir vídeo",
+      "pause": "Pausar vídeo"
+    }
+  },
+  "day": {
+    "eyebrow": "Seu dia com Deus",
+    "title": "Manhã, tarde e noite, um passo de cada vez.",
+    "intro": "O Missale organiza o dia em momentos simples. Você faz o que puder, no seu ritmo.",
+    "steps": {
+      "morning": {
+        "label": "Manhã",
+        "title": "Ofereça o dia e abra a Palavra",
+        "body": "Comece com o oferecimento da manhã, escrevendo o que você espera do dia, e leia a Palavra do dia com o seu contexto.",
+        "alt": "Tela Hoje do Missale, com a lista \"Seu dia com Deus\" e os passos da rotina diária."
+      },
+      "afternoon": {
+        "label": "Tarde",
+        "title": "Diga como você está",
+        "body": "No check-in \"Hoje eu estou…\", escolha entre 16 estados e escreva algumas palavras, se quiser.",
+        "alt": "Tela do check-in \"Hoje eu estou…\", com os 16 estados para escolher."
+      },
+      "night": {
+        "label": "Noite",
+        "title": "Reveja o dia e agradeça",
+        "body": "O Exame da noite retoma o que você escreveu de manhã. Depois, reze Completas, a oração da noite.",
+        "alt": "Tela do Exame da noite, em tons escuros, com as perguntas para rever o dia."
+      }
+    }
+  },
+  "gratitude": {
+    "eyebrow": "Agradecer o dia",
+    "question": "Pelo que você quer agradecer hoje?",
+    "placeholder": "Escreva aqui",
+    "submit": "Entregar",
+    "note": "Isto não é enviado nem guardado.",
+    "done": "Entregue.",
+    "again": "Escrever outra vez"
+  },
+  "features": {
+    "eyebrow": "O que tem dentro",
+    "title": "Para rezar, ler e aprender, todos os dias.",
+    "intro": "Cinco partes do app para conhecer.",
+    "items": {
+      "word": {
+        "title": "Palavra e santo do dia",
+        "body": "A Palavra do dia com contexto e o santo do dia com biografia e oração. Os dois aparecem em widgets na tela inicial do iPhone.",
+        "alt": "Tela do santo do dia no Missale, com o nome, a imagem em domínio público e a biografia."
+      },
+      "rosary": {
+        "title": "Terço guiado",
+        "body": "Reze com voz, no modo iniciante ou com a tela apagada, e leve o celular no bolso.",
+        "alt": "Tela do Terço no Missale, mostrando uma Ave-Maria."
+      },
+      "checkin": {
+        "title": "Hoje eu estou…",
+        "body": "Escolha entre 16 estados e receba um salmo, um santo e um passo para o dia. O que você escrever fica no seu aparelho, a menos que você toque para receber a orientação.",
+        "alt": "Tela do check-in \"Hoje eu estou…\", com os 16 estados."
+      },
+      "bible": {
+        "title": "Bíblia no seu idioma",
+        "body": "A Bíblia completa, com marcadores, busca por referência ou palavra e o lugar onde você parou.",
+        "alt": "Tela da Bíblia no Missale, com um salmo aberto."
+      },
+      "formation": {
+        "title": "Formação",
+        "body": "Sete trilhas com 50 lições curtas, de uns 4 minutos, sobre a Missa, os sacramentos, o ano litúrgico e mais.",
+        "alt": ""
+      }
+    }
+  },
+  "guidance": {
+    "eyebrow": "Como a orientação funciona",
+    "title": "A IA escolhe. Ela não inventa.",
+    "intro": "A orientação do Missale não é uma conversa. É uma escolha entre respostas católicas já revisadas.",
+    "steps": [
+      {
+        "title": "Você escreve",
+        "body": "Conte com as suas palavras o que você está sentindo."
+      },
+      {
+        "title": "O app escolhe",
+        "body": "Entre 720 respostas católicas revisadas, 240 por idioma, a IA escolhe a que mais combina com o seu texto. Ela não escreve nada novo."
+      },
+      {
+        "title": "Você recebe",
+        "body": "Um salmo, um santo que passou por algo parecido e um passo concreto para o dia."
+      }
+    ],
+    "care": "Se o que você escrever trouxer sinal de risco à vida, o app mostra primeiro a orientação de crise.",
+    "disclaimer": "O Missale não substitui um padre, um diretor espiritual nem o cuidado profissional."
+  },
+  "privacy": {
+    "eyebrow": "Privacidade",
+    "title": "O seu dia é seu.",
+    "lead": "O que você escreve fica no seu celular.",
+    "exceptionsTitle": "Duas exceções, ditas com clareza",
+    "exceptions": [
+      {
+        "title": "A orientação",
+        "body": "O texto que você escreve sai do aparelho só quando você toca no botão para receber a orientação. Nós não guardamos esse texto."
+      },
+      {
+        "title": "A personalização",
+        "body": "Para assinantes com a personalização ligada, alguns textos saem para escolher o que mostrar: a intenção do Terço, as respostas do Exame, a intenção da manhã e, para a Palavra do dia, o último registro do \"Hoje eu estou…\". Isso só começa depois que você permite, e você pode desligar em Ajustes. Nas duas exceções, o texto serve só para escolher algo no acervo revisado."
+      }
+    ],
+    "points": [
+      "Você pode exportar e apagar os seus dados a qualquer momento.",
+      "Você entra com a Apple, sem senha.",
+      "Sem anúncios. Não vendemos, alugamos nem compartilhamos dados."
+    ],
+    "link": "Ler a política de privacidade completa"
+  },
+  "pricing": {
+    "eyebrow": "Preços",
+    "title": "O essencial é grátis.",
+    "intro": "Comece de graça e, se quiser mais, experimente o Premium.",
+    "free": {
+      "title": "Grátis para sempre",
+      "tagline": "Com ou sem assinatura.",
+      "items": [
+        "Palavra do dia",
+        "Santo do dia",
+        "Terço completo: guiado, com voz, modo iniciante e tela apagada",
+        "Check-in \"Hoje eu estou…\" com todo o caminho de apoio",
+        "Ajustes"
+      ]
+    },
+    "premium": {
+      "title": "Premium",
+      "tagline": "Para ir mais fundo na rotina.",
+      "items": [
+        "Orientação personalizada",
+        "Arquivo completo de santos",
+        "Calendário litúrgico",
+        "Formação: 7 trilhas e 50 lições",
+        "Orações devocionais",
+        "Aparições marianas",
+        "Exame da noite e Completas"
+      ]
+    },
+    "trial": "14 dias grátis, plano mensal ou anual. O período grátis vale uma vez por Apple ID.",
+    "priceNote": "Veja o preço na App Store. Os valores variam por país."
+  },
+  "faq": {
+    "title": "Perguntas frequentes",
+    "items": [
+      {
+        "q": "Em quais idiomas o Missale está disponível?",
+        "a": "Em português, inglês e espanhol. Cada idioma tem os seus próprios textos, e não uma tradução automática."
+      },
+      {
+        "q": "Qual Bíblia o app usa?",
+        "a": "Uma Bíblia completa em edição católica de domínio público: Matos Soares em português, Douay-Rheims em inglês e Torres Amat em espanhol."
+      },
+      {
+        "q": "Preciso de uma conta?",
+        "a": "Sim. O app pede uma conta, criada com o Entrar com a Apple. Não há senha: quem confirma que é você é a Apple."
+      },
+      {
+        "q": "Funciona no iPad e no Android?",
+        "a": "O Missale está disponível para iPhone e iPad. Ainda não há versão para Android."
+      },
+      {
+        "q": "De onde vem o conteúdo?",
+        "a": "De fontes católicas e de domínio público, sempre com a referência. As respostas da orientação são revisadas, e a IA só escolhe entre elas. Conteúdo novo chega sem você precisar atualizar o app."
+      }
+    ]
+  },
+  "footer": {
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "support": "Suporte",
+    "contact": "Contato",
+    "languages": "Idiomas",
+    "help": "Precisa de ajuda agora?",
+    "line": "Missale é um companheiro de oração; não substitui a vida sacramental da Igreja."
+  },
+  "legal": {
+    "privacyTitle": "Política de Privacidade | Missale",
+    "privacyDescription": "Como o Missale trata os seus dados: o que fica no seu aparelho, o que a conta guarda, e como exportar ou apagar tudo.",
+    "termsTitle": "Termos de Uso | Missale",
+    "termsDescription": "Os termos de uso do Missale: o que é grátis, o que faz parte do Premium e como funciona a assinatura.",
+    "eulaNote": "A assinatura e o uso do app também seguem o contrato de licença padrão da Apple.",
+    "eulaLink": "Contrato de licença padrão da Apple (EULA)",
+    "back": "Voltar ao início"
+  },
+  "support": {
+    "title": "Suporte",
+    "description": "Ajuda com o Missale: assinatura, exportar e apagar os seus dados, e perguntas comuns.",
+    "intro": "Escreva para nós e responderemos por e-mail.",
+    "emailLabel": "E-mail",
+    "sections": [
+      {
+        "title": "Gerenciar ou cancelar a assinatura",
+        "body": [
+          "A assinatura é gerenciada na sua conta da Apple: Ajustes do iPhone, toque no seu nome e depois em Assinaturas.",
+          "Para não ser cobrado pelo período seguinte, cancele pelo menos 24 horas antes do fim do período atual."
+        ]
+      },
+      {
+        "title": "Exportar os seus dados",
+        "body": [
+          "No app, abra Configurações › Seus dados e toque em Exportar os seus dados.",
+          "Você recebe um arquivo JSON com tudo o que escreveu e registrou, pela folha de compartilhar do iOS. O arquivo é gerado no aparelho e só sai dele se você enviar."
+        ]
+      },
+      {
+        "title": "Apagar os seus dados e a conta",
+        "body": [
+          "Para apagar o que você escreveu e registrou no aparelho, abra Configurações › Seus dados e toque em Apagar os seus dados. As preferências continuam. Não dá para desfazer.",
+          "Para apagar a conta, abra Configurações › Conta › Apagar conta, ou escreva para o e-mail de suporte. Isso apaga do nosso servidor o que guardamos sobre você.",
+          "Apagar a conta não cancela a assinatura. Isso se faz na App Store."
+        ]
+      },
+      {
+        "title": "Perguntas comuns",
+        "body": [
+          "Trocou de aparelho? Restaure a compra no novo aparelho, entrando com o mesmo Apple ID.",
+          "Santos, palavras do dia e outros conteúdos novos chegam sem você precisar atualizar o app."
+        ]
+      }
+    ]
+  }
+}

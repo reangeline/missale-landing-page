@@ -1,0 +1,46 @@
+---
+import { getContent } from '../i18n/content';
+import { storeUrl, type StoreSection } from '../config/site';
+import type { Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  section: StoreSection;
+  compact?: boolean;
+}
+
+const { lang, section, compact = false } = Astro.props;
+const t = getContent(lang);
+const url = storeUrl(lang, section);
+---
+
+{
+  url ? (
+    <a class:list={['btn', compact ? 'btn--quiet' : 'btn--primary']} href={url}>
+      {t.cta.download}
+    </a>
+  ) : (
+    <span class:list={['store-soon-wrap', { compact }]}>
+      <span class="btn btn--quiet store-soon">{t.cta.soon}</span>
+      {!compact && <span class="ui store-note">{t.cta.soonNote}</span>}
+    </span>
+  )
+}
+
+<style>
+  .store-soon-wrap {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+  }
+  .store-soon {
+    cursor: default;
+  }
+  .store-soon:hover {
+    background: transparent;
+  }
+  .store-note {
+    color: var(--muted);
+  }
+</style>

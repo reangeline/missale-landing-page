@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import { getPrint, type PrintName } from '../i18n/prints';
+import type { Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  name: PrintName;
+  alt: string;
+  /** Largura exibida em px de CSS (define `sizes` e a maior variante gerada). */
+  width?: number;
+  /** Só o topo do print, cortado na proporção dada (ex.: "3 / 4"), para cartões. */
+  crop?: string;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+
+const { lang, name, alt, width = 300, crop, loading = 'lazy', class: className } = Astro.props;
+const src = getPrint(lang, name);
+---
+
+<div class:list={['phone', { 'phone--crop': crop }, className]} style={crop ? `--crop:${crop}` : undefined}>
+  <Image
+    src={src}
+    alt={alt}
+    widths={[width, Math.min(width * 2, src.width)]}
+    sizes={`${width}px`}
+    format="webp"
+    quality={72}
+    loading={loading}
+    decoding="async"
+  />
+</div>
+
+<style>
+  /* Moldura plana: só borda e raio, sem sombra. */
+  .phone {
+    border: 1px solid var(--line);
+    border-radius: 36px;
+    padding: 7px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .phone :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 29px;
+  }
+  .phone--crop {
+    border-bottom: 0;
+    border-radius: 36px 36px 0 0;
+    padding-bottom: 0;
+  }
+  .phone--crop :global(img) {
+    aspect-ratio: var(--crop);
+    object-fit: cover;
+    object-position: top;
+    border-radius: 29px 29px 0 0;
+  }
+</style>

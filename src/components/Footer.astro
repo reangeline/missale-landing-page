@@ -1,0 +1,115 @@
+---
+import type { Content } from '../content/schema';
+import { SITE } from '../config/site';
+import { pathFor, type Lang, type Page } from '../i18n/routes';
+import LangSwitch from './LangSwitch.astro';
+
+interface Props {
+  lang: Lang;
+  /** Página atual, para o seletor de idioma levar à equivalente. */
+  page: Page;
+  t: Content;
+}
+
+const { lang, page, t } = Astro.props;
+const support = pathFor(lang, 'support');
+const links = [
+  { href: pathFor(lang, 'privacy'), label: t.footer.privacy },
+  { href: pathFor(lang, 'terms'), label: t.footer.terms },
+  { href: support, label: t.footer.support },
+  { href: `${support}#help`, label: t.footer.help },
+];
+---
+
+<footer class="section--night site-footer" data-lang={lang}>
+  <div class="container grid">
+    <div class="brand">
+      <p class="wordmark">Missale</p>
+      <p class="line">{t.footer.line}</p>
+    </div>
+    <ul class="ui links" role="list">
+      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+    <div class="ui col">
+      <p class="col-title">{t.footer.contact}</p>
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      {
+        SITE.social.length > 0 && (
+          <ul class="social" role="list">
+            {SITE.social.map((s) => (
+              <li><a href={s.href} rel="me noopener">{s.label}</a></li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+    <div class="ui col">
+      <p class="col-title">{t.footer.languages}</p>
+      <LangSwitch lang={lang} page={page} label={t.nav.language} />
+    </div>
+  </div>
+  <div class="container">
+    <p class="ui copy">© {new Date().getFullYear()} Missale</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--gold);
+    padding-block: 64px 32px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 40px 32px;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .line {
+    color: var(--night-muted);
+    font-size: 18px;
+    max-width: 32ch;
+  }
+  .links {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+  }
+  .links a,
+  .col a:not([data-lang-choice]) {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+  .col {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+  }
+  .col-title {
+    color: var(--night-muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .social {
+    display: grid;
+    gap: 8px;
+  }
+  .copy {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--night-line);
+    font-size: 13px;
+    color: var(--night-muted);
+  }
+  @media (max-width: 899px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
