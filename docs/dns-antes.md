@@ -34,3 +34,11 @@ parking.d.parity.domains. 60	IN	A	104.219.250.36
 | `www` | CNAME | `parkingpage.namecheap.com.` | `2705bd57fcad7af2.vercel-dns-017.com.` |
 
 MX (`eforward*.registrar-servers.com`) e TXT (SPF do encaminhamento de e-mail) não mudam.
+
+## Mudança aplicada em 2026-10-01
+
+Feita no painel da Namecheap (Advanced DNS), depois do login do Renato:
+
+- O registro de `@` era um **URL Redirect Record** para `http://www.missaleapp.com/` (por isso o A apontava para o estacionamento). Virou **A Record** `216.198.79.1`, TTL 30 min.
+- O **CNAME** de `www` passou de `parkingpage.namecheap.com.` para `2705bd57fcad7af2.vercel-dns-017.com.`, TTL 30 min.
+- Mail Settings continua em **Email Forwarding**; MX e TXT (SPF) não foram tocados.
