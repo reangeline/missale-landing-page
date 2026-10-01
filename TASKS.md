@@ -248,12 +248,19 @@ Fonte: `SPEC.md` (aprovado em 2026-10-01). Orçamento externo aprovado (vídeo):
     Lighthouse mobile em produção (vercel.app): pt {performance 99, accessibility 100} · en {100, 100} · es {99, 100}; LCP 1.8 s
     ```
 
-- [!] T18 — Domínio missaleapp.com (Namecheap → Vercel)
+- [x] T18 — Domínio missaleapp.com (Namecheap → Vercel)
   - agente: sessão principal (ação externa, DNS)
   - depende de: T17
   - aceite: registros atuais salvos em `docs/dns-antes.md` antes de qualquer mudança; só A/CNAME de `@` e `www` alterados para os valores indicados pela Vercel; MX/TXT intactos; `missaleapp.com` como domínio principal e `www` redirecionando (308).
   - verificar: `curl -sI https://missaleapp.com | head -1; curl -sI https://www.missaleapp.com | grep -iE "^HTTP|^location"; dig +short missaleapp.com MX; dig +short missaleapp.com TXT`
   - evidência:
+    ```
+    Namecheap (Advanced DNS): URL Redirect de @ → A Record 216.198.79.1; CNAME www → 2705bd57fcad7af2.vercel-dns-017.com. (docs/dns-antes.md tem o antes e o depois)
+    vercel domains verify missaleapp.com → status ok, configured-correctly; certificado Let's Encrypt emitido (CN=missaleapp.com, válido até 30/12/2026)
+    curl -sI https://missaleapp.com → 200 · https://www.missaleapp.com/pt → 308 location: https://missaleapp.com/pt · http://missaleapp.com → 308 https://missaleapp.com/
+    dig +short missaleapp.com MX → eforward1–5.registrar-servers.com (idêntico ao de antes)
+    dig +short missaleapp.com TXT → "v=spf1 include:spf.efwd.registrar-servers.com ~all" (idêntico ao de antes)
+    ```
     ```
     Feito na Vercel: missaleapp.com e www.missaleapp.com adicionados ao projeto; www redireciona (308) para o apex.
     Registros pedidos pela Vercel: A @ → 216.198.79.1 · CNAME www → 2705bd57fcad7af2.vercel-dns-017.com.
@@ -261,12 +268,18 @@ Fonte: `SPEC.md` (aprovado em 2026-10-01). Orçamento externo aprovado (vídeo):
     BLOQUEIO: a Namecheap pediu usuário e senha no Chrome (sessão não estava ativa) e eu não digito senhas. Falta o Renato entrar na conta para eu alterar os dois registros, ou alterá-los ele mesmo.
     ```
 
-- [!] T19 — Verificação em produção
+- [x] T19 — Verificação em produção
   - agente: mecanico (haiku)
   - depende de: T18
   - aceite: as 6 URLs de `$G/aso/metadata/*/{support,privacy}_url.txt` e as 3 home pages respondem 200; Lighthouse mobile em produção ≥ 95 em desempenho e acessibilidade em `/pt`, `/en`, `/es`.
   - verificar: `for u in $(cat $G/aso/metadata/*/{support,privacy}_url.txt) https://missaleapp.com/{pt,en,es}; do echo "$(curl -s -o /dev/null -w '%{http_code}' $u) $u"; done` + Lighthouse
   - evidência:
+    ```
+    200 https://missaleapp.com/en/support · 200 /es/soporte · 200 /pt/suporte · 200 /en/privacy · 200 /es/privacidad · 200 /pt/privacidade (URLs do ASO)
+    200 https://missaleapp.com · /pt · /en · /es · /pt/termos · /en/terms · /es/terminos
+    /_vercel/insights/script.js → 200 (Web Analytics ativo)
+    Lighthouse mobile em https://missaleapp.com: pt {performance 100, accessibility 100, best-practices 100, seo 100} LCP 1.5 s · en {99, 100, 100, 100} LCP 1.8 s · es {99, 100, 100, 100} LCP 2.0 s
+    ```
     ```
     Parcial (domínio da Vercel): 200 nas 3 homes e nas 9 páginas legais; Lighthouse mobile em produção ≥ 99 em desempenho e 100 em acessibilidade nos 3 idiomas.
     BLOQUEIO: as URLs de missaleapp.com cadastradas no ASO só respondem depois do DNS (T18).
