@@ -1,0 +1,110 @@
+---
+import type { Content } from '../../content/schema';
+import { ANCHORS, pathFor, type Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+
+const { lang, t } = Astro.props;
+const { privacy } = t;
+---
+
+<section id={ANCHORS.privacy} class="section section--deep" data-section="Privacy" data-lang={lang}>
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow">{privacy.eyebrow}</p>
+      <h2 class="heading">{privacy.title}</h2>
+    </header>
+
+    <p class="quote">{privacy.lead}</p>
+
+    <h3 class="subheading ex-title">{privacy.exceptionsTitle}</h3>
+    <div class="exceptions">
+      {
+        privacy.exceptions.map((e) => (
+          <div class="card">
+            <h4 class="ex-name">{e.title}</h4>
+            <p>{e.body}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <ul role="list" class="points">
+      {
+        privacy.points.map((p) => (
+          <li class="point">
+            <span class="dash" aria-hidden="true"></span>
+            <span>{p}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="more"><a href={pathFor(lang, 'privacy')}>{privacy.link}</a></p>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: 20px;
+    max-width: 640px;
+  }
+  .quote {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 1.1;
+    text-wrap: balance;
+    max-width: 20ch;
+    margin-block: clamp(32px, 5vw, 56px) clamp(56px, 8vw, 88px);
+  }
+  .ex-title {
+    margin-bottom: 24px;
+  }
+  .exceptions {
+    display: grid;
+    gap: 24px;
+  }
+  .exceptions .card {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  .ex-name {
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+  }
+  .points {
+    display: grid;
+    gap: 16px;
+    margin: clamp(40px, 6vw, 64px) 0 0;
+  }
+  .point {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .dash {
+    flex: none;
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+    transform: translateY(-0.3em);
+  }
+  .more {
+    margin-top: 40px;
+  }
+
+  @media (min-width: 760px) {
+    .exceptions {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

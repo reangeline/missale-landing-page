@@ -1,0 +1,95 @@
+---
+import '../styles/tokens.css';
+import '../styles/fonts.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getContent } from '../i18n/content';
+import { LANGS, pathFor, type Lang, type Page } from '../i18n/routes';
+import { SITE, ON_VERCEL, appStoreId } from '../config/site';
+
+interface Props {
+  lang: Lang;
+  page: Page;
+  title: string;
+  description: string;
+}
+
+const { lang, page, title, description } = Astro.props;
+const t = getContent(lang);
+
+const canonical = SITE.url + pathFor(lang, page);
+const alternates = LANGS.map((l) => ({ hreflang: l, href: SITE.url + pathFor(l, page) }));
+const xDefault = page === 'home' ? `${SITE.url}/` : SITE.url + pathFor('en', page);
+const OG_LOCALE: Record<Lang, string> = { pt: 'pt_BR', en: 'en_US', es: 'es_MX' };
+const ogImage = `${SITE.url}/og.png`;
+const jsonLd =
+  page === 'home'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'MobileApplication',
+        name: SITE.name,
+        operatingSystem: 'iOS',
+        applicationCategory: 'LifestyleApplication',
+        description,
+        url: canonical,
+        inLanguage: lang,
+        ...(appStoreId ? { downloadUrl: `https://apps.apple.com/app/id${appStoreId}` } : {}),
+      }
+    : null;
+const analytics = ON_VERCEL;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>
+      /* eslint-disable no-var, no-empty, @typescript-eslint/no-unused-vars */
+      (function(){try{var q=new URLSearchParams(location.search).get('h');var h=q!==null&&/^\d{1,2}$/.test(q)?+q%24:new Date().getHours();document.documentElement.dataset.daypart=h>=5&&h<12?'morning':h>=12&&h<18?'afternoon':'night'}catch(e){}})();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F8F3EA" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/CormorantGaramond-Medium.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/EBGaramond-Regular.woff2" crossorigin />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    {LANGS.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={OG_LOCALE[l]} />)}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.ogAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {appStoreId && <meta name="apple-itunes-app" content={`app-id=${appStoreId}`} />}
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    {
+      analytics && (
+        <>
+          <script is:inline>/* eslint-disable prefer-rest-params */window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+          <script is:inline defer src="/_vercel/insights/script.js"></script>
+        </>
+      )
+    }
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t.nav.skip}</a>
+    <Header lang={lang} page={page} t={t} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} page={page} t={t} />
+  </body>
+</html>

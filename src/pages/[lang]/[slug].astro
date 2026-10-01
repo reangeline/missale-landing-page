@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getContent, CRISIS } from '../../i18n/content';
+import { getLegalHtml } from '../../lib/legal';
+import { SITE } from '../../config/site';
+import { ANCHORS, LANGS, LEGAL_PAGES, LEGAL_SLUGS, pathFor } from '../../i18n/routes';
+import type { Lang, LegalPage } from '../../i18n/routes';
+
+export function getStaticPaths() {
+  return LANGS.flatMap((lang) =>
+    LEGAL_PAGES.map((page) => ({ params: { lang, slug: LEGAL_SLUGS[page][lang] }, props: { page } })),
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const { page } = Astro.props as { page: LegalPage };
+const t = getContent(lang);
+const crisis = CRISIS[lang];
+
+const title =
+  page === 'privacy' ? t.legal.privacyTitle : page === 'terms' ? t.legal.termsTitle : `${t.support.title} | Missale`;
+const description =
+  page === 'privacy'
+    ? t.legal.privacyDescription
+    : page === 'terms'
+      ? t.legal.termsDescription
+      : t.support.description;
+const html = page === 'support' ? '' : getLegalHtml(lang, page);
+---
+
+<Base lang={lang} page={page} title={title} description={description}>
+  <div class="section">
+    <div class="container">
+      <div class="column">
+        <a class="back ui" href={pathFor(lang)}>← {t.legal.back}</a>
+
+        {
+          page === 'support' ? (
+            <>
+              <h1 class="heading">{t.support.title}</h1>
+              <p class="lead">{t.support.intro}</p>
+              <p class="contact">
+                {t.support.emailLabel}: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+              </p>
+              {t.support.sections.map((s) => (
+                <section class="block">
+                  <h2 class="subheading">{s.title}</h2>
+                  {s.body.map((p) => (
+                    <p>{p}</p>
+                  ))}
+                </section>
+              ))}
+            </>
+          ) : (
+            <>
+              {page === 'terms' && (
+                <p class="card eula ui">
+                  {t.legal.eulaNote}{' '}
+                  <a href={SITE.eulaUrl} rel="noopener">
+                    {t.legal.eulaLink}
+                  </a>
+                </p>
+              )}
+              <div class="prose" data-legal-body set:html={html} />
+            </>
+          )
+        }
+
+        <aside id={ANCHORS.help} class="card help">
+          <h2 class="subheading">{t.footer.help}</h2>
+          <p class="help-title">{crisis.title}</p>
+          <p>{crisis.message}</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .column { max-width: 720px; }
+  .back { display: inline-block; margin-bottom: 32px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+  .eula { padding: 16px 20px; margin: 0 0 32px; }
+  .contact { margin-top: 24px; font-size: 20px; }
+  .block { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .block p, .help p { font-size: 20px; line-height: 1.5; margin: 0.9em 0 0; }
+  .contact a, .block a, .prose :global(a) { text-decoration: underline; text-underline-offset: 3px; }
+  .help { margin-top: 64px; padding: 28px; }
+  .help .help-title { font-weight: 600; }
+
+  .prose :global(h1) { font-family: var(--font-display); font-weight: 500; font-size: clamp(36px, 5vw, 56px); line-height: 1.08; margin: 0 0 24px; }
+  .prose :global(h2) { font-family: var(--font-display); font-weight: 500; font-size: 30px; line-height: 1.15; margin: 56px 0 0; padding-top: 28px; border-top: 1px solid var(--line); }
+  .prose :global(h3) { font-family: var(--font-display); font-weight: 500; font-size: 24px; line-height: 1.2; margin: 36px 0 0; }
+  .prose :global(p), .prose :global(li) { font-size: 20px; line-height: 1.5; }
+  .prose :global(p) { margin: 0.9em 0 0; }
+  .prose :global(ul), .prose :global(ol) { margin: 0.9em 0 0; padding-left: 1.5em; }
+  .prose :global(li) { margin-top: 0.4em; }
+  .prose :global(strong) { font-weight: 600; }
+  .prose :global(code) { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; background: var(--surface-deep); border-radius: 4px; padding: 0.1em 0.35em; overflow-wrap: anywhere; }
+</style>

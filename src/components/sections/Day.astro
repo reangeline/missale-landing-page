@@ -1,0 +1,194 @@
+---
+import PhoneShot from '../PhoneShot.astro';
+import type { Content } from '../../content/schema';
+import { ANCHORS, type Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+
+const { lang, t } = Astro.props;
+const { day } = t;
+
+const steps = [
+  { key: 'morning', print: '01-hoje', ...day.steps.morning },
+  { key: 'afternoon', print: '02-checkin', ...day.steps.afternoon },
+  { key: 'night', print: '08-exame', ...day.steps.night },
+] as const;
+---
+
+<section id={ANCHORS.day} class="section day" data-section="Day" data-lang={lang}>
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow">{day.eyebrow}</p>
+      <h2 class="heading">{day.title}</h2>
+      <p class="lead">{day.intro}</p>
+    </header>
+
+    <ol role="list" class="steps">
+      {
+        steps.map((s) => (
+          <li role="listitem" class="step" data-step={s.key}>
+            <figure class="shot">
+              <PhoneShot lang={lang} name={s.print} alt={s.alt} width={280} />
+            </figure>
+            <div class="copy">
+              <div class="copy-in">
+                <p class="eyebrow label">{s.label}</p>
+                <h3 class="subheading">{s.title}</h3>
+                <p class="body">{s.body}</p>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<script>
+  const section = document.querySelector<HTMLElement>('#day');
+  if (section) {
+    const wide = matchMedia('(min-width: 900px)');
+    const calm = matchMedia('(prefers-reduced-motion: reduce)');
+    const copies = section.querySelectorAll<HTMLElement>('.step');
+    let io: IntersectionObserver | undefined;
+
+    const apply = () => {
+      const on = wide.matches && !calm.matches;
+      section.classList.toggle('is-enhanced', on);
+      io?.disconnect();
+      io = undefined;
+      if (!on) {
+        delete section.dataset.active;
+        return;
+      }
+      section.dataset.active ||= copies[0]?.dataset.step ?? 'morning';
+      io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            const step = (e.target as HTMLElement).dataset.step;
+            if (e.isIntersecting && step) section.dataset.active = step;
+          }
+        },
+        { rootMargin: '-45% 0px -45% 0px' },
+      );
+      section.querySelectorAll('.copy').forEach((c) => io?.observe(c));
+    };
+
+    // O observer observa .copy; o data-step vem do <li> pai.
+    section.querySelectorAll<HTMLElement>('.copy').forEach((c) => {
+      c.dataset.step = c.closest<HTMLElement>('.step')?.dataset.step;
+    });
+
+    wide.addEventListener('change', apply);
+    calm.addEventListener('change', apply);
+    apply();
+  }
+</script>
+
+<style>
+  .head { max-width: 640px; }
+  .head .heading { margin-top: 20px; }
+  .head .lead { margin-top: 20px; }
+
+  .steps { margin-top: clamp(48px, 7vw, 80px); }
+
+  /* Base: lista vertical simples. */
+  .step { display: flex; flex-direction: column; gap: 32px; align-items: flex-start; }
+  .step + .step {
+    margin-top: 80px;
+    padding-top: 80px;
+    border-top: 1px solid var(--line);
+  }
+  .shot { margin: 0; width: min(280px, 100%); flex: none; }
+  .copy { min-width: 0; }
+  .copy-in { max-width: 480px; }
+  .copy-in .subheading { margin-top: 16px; }
+  .body { margin-top: 16px; color: var(--muted); }
+
+  @media (min-width: 640px) {
+    .step { flex-direction: row; gap: 48px; align-items: center; }
+  }
+
+  /* Destaque do período atual. */
+  .label { transition: color 0.3s; }
+  .label::before { transition: width 0.3s; }
+  html[data-daypart='morning'] .step[data-step='morning'] .label,
+  html[data-daypart='afternoon'] .step[data-step='afternoon'] .label,
+  html[data-daypart='night'] .step[data-step='night'] .label {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  html[data-daypart='morning'] .step[data-step='morning'] .label::before,
+  html[data-daypart='afternoon'] .step[data-step='afternoon'] .label::before,
+  html[data-daypart='night'] .step[data-step='night'] .label::before {
+    width: 64px;
+  }
+
+  /* À noite, a etapa "Noite" vira cartão escuro. */
+  html[data-daypart='night'] .step[data-step='night'] .copy-in {
+    --ink: var(--night-ink);
+    --muted: var(--night-muted);
+    --line: var(--night-line);
+    background: var(--night);
+    color: var(--night-ink);
+    border: 1px solid var(--night-line);
+    border-radius: var(--radius-card);
+    padding: 32px;
+  }
+
+  /* Aprimorado: duas colunas, prints fixos à esquerda (uma cópia de cada). */
+  .is-enhanced .steps {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 64px;
+    align-items: start;
+  }
+  .is-enhanced .step,
+  .is-enhanced .step + .step {
+    display: contents;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .is-enhanced .shot {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    position: sticky;
+    top: calc(var(--header-h) + 48px);
+    justify-self: center;
+    width: min(300px, calc((100vh - var(--header-h) - 96px) * 0.46));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .is-enhanced[data-active='morning'] .step[data-step='morning'] .shot,
+  .is-enhanced[data-active='afternoon'] .step[data-step='afternoon'] .shot,
+  .is-enhanced[data-active='night'] .step[data-step='night'] .shot {
+    opacity: 1;
+  }
+  .is-enhanced .copy {
+    grid-column: 2;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+  .is-enhanced .copy-in {
+    border-left: 1px solid var(--line);
+    padding-left: 24px;
+    transition: border-color 0.3s;
+  }
+  .is-enhanced .step:nth-child(1) .copy { grid-row: 1; }
+  .is-enhanced .step:nth-child(2) .copy { grid-row: 2; }
+  .is-enhanced .step:nth-child(3) .copy { grid-row: 3; }
+  .is-enhanced[data-active='morning'] .step[data-step='morning'] .copy-in,
+  .is-enhanced[data-active='afternoon'] .step[data-step='afternoon'] .copy-in,
+  .is-enhanced[data-active='night'] .step[data-step='night'] .copy-in {
+    border-left-color: var(--ink);
+  }
+  /* Cartão noturno (borda e padding próprios): a etapa ativa usa night-ink. */
+  html[data-daypart='night'] .is-enhanced[data-active='night'] .step[data-step='night'] .copy-in {
+    border-left-color: var(--night-ink);
+  }
+</style>

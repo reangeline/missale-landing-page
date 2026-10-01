@@ -1,0 +1,77 @@
+---
+import type { Content } from '../../content/schema';
+import { ANCHORS, type Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+
+const { lang, t } = Astro.props;
+const { faq } = t;
+---
+
+<section id={ANCHORS.faq} class="section" data-section="Faq" data-lang={lang}>
+  <div class="container">
+    <div class="block">
+      <h2 class="heading">{faq.title}</h2>
+      <div class="list">
+        {
+          faq.items.map((it) => (
+            <details>
+              <summary>{it.q}</summary>
+              <p>{it.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .block {
+    max-width: 800px;
+    margin-inline: auto;
+    padding-top: clamp(32px, 5vw, 48px);
+    border-top: 1px solid var(--line);
+  }
+  .list {
+    margin-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  details {
+    border-bottom: 1px solid var(--line);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 48px;
+    padding-block: 20px;
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1.2;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::after {
+    content: '+';
+    flex: none;
+    font-family: var(--font-ui);
+    font-size: 24px;
+    line-height: 1;
+    color: var(--muted);
+  }
+  details[open] summary::after {
+    content: '\2013';
+  }
+  details p {
+    max-width: 60ch;
+    padding-bottom: 24px;
+  }
+</style>

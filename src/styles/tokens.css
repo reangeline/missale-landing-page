@@ -1,0 +1,27 @@
+:root {
+  --canvas: #F8F3EA;
+  --surface: #FBF8F1;
+  --surface-deep: #EBE6DC;
+  --feature: #F1E4C8;
+  --ink: #221B1C;
+  --muted: #6F6567;
+  --muted-feature: #62585A; /* --muted sobre --feature, para manter contraste AA */
+  --line: #D9D2C4;
+  --accent: #7A1F2B;
+  --accent-deep: #5E1620;
+  --gold: #B3872F;
+  --night: #1C1618;
+  --night-ink: #F8F3EA;
+  --night-muted: #B9AEA6;
+  --night-line: #3A3033;
+
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-body: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+  --font-ui: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --container: 1120px;
+  --gutter: clamp(20px, 4vw, 32px);
+  --section: clamp(80px, 10vw, 120px);
+  --radius-card: 24px;
+  --header-h: 64px;
+}
