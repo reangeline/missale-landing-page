@@ -1,0 +1,85 @@
+---
+import '../styles/tokens.css';
+import '../styles/fonts.css';
+import '../styles/global.css';
+import { ON_VERCEL } from '../config/site';
+
+const analytics = ON_VERCEL;
+const desc = 'A place to reflect on your day and give thanks. Available in Portuguese, English and Spanish.';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>
+      /* eslint-disable no-var, no-empty, @typescript-eslint/no-unused-vars */
+      (function(){var l;try{l=localStorage.getItem('missale:lang')}catch(e){}if(l!=='pt'&&l!=='en'&&l!=='es'){l='en';var n=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''];for(var i=0;i<n.length;i++){var c=String(n[i]).slice(0,2).toLowerCase();if(c==='pt'||c==='en'||c==='es'){l=c;break}}}location.replace('/'+l+location.search+location.hash)})();
+    </script>
+    <noscript><meta http-equiv="refresh" content="0; url=/en" /></noscript>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Missale</title>
+    <meta name="description" content={desc} />
+    <meta name="theme-color" content="#F8F3EA" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="https://missaleapp.com/" />
+    <link rel="alternate" hreflang="pt" href="https://missaleapp.com/pt" />
+    <link rel="alternate" hreflang="en" href="https://missaleapp.com/en" />
+    <link rel="alternate" hreflang="es" href="https://missaleapp.com/es" />
+    <link rel="alternate" hreflang="x-default" href="https://missaleapp.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Missale" />
+    <meta property="og:title" content="Missale" />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content="https://missaleapp.com/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="pt_BR" />
+    <meta property="og:locale:alternate" content="es_MX" />
+    <meta property="og:image" content="https://missaleapp.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Missale, a place to reflect on your day and give thanks, on a parchment-colored background." />
+    <meta name="twitter:card" content="summary_large_image" />
+    {
+      analytics && (
+        <>
+          <script is:inline>/* eslint-disable prefer-rest-params */window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+          <script is:inline defer src="/_vercel/insights/script.js"></script>
+        </>
+      )
+    }
+  </head>
+  <body>
+    <main class="gate">
+      <h1 class="display">Missale</h1>
+      <nav class="ui" aria-label="Missale">
+        <a href="/pt" lang="pt">Português</a>
+        <a href="/en" lang="en">English</a>
+        <a href="/es" lang="es">Español</a>
+      </nav>
+    </main>
+  </body>
+</html>
+
+<style>
+  .gate {
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 24px;
+    padding: var(--gutter);
+    text-align: center;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 24px;
+  }
+  nav a {
+    padding: 12px 0;
+  }
+</style>

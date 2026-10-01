@@ -1,0 +1,129 @@
+---
+import PhoneShot from '../PhoneShot.astro';
+import type { Content } from '../../content/schema';
+import { ANCHORS, type Lang } from '../../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+
+const { lang, t } = Astro.props;
+const { features } = t;
+const { items } = features;
+
+const cards = [
+  { key: 'word', print: '07-santo', ...items.word },
+  { key: 'rosary', print: '05-terco', ...items.rosary },
+  { key: 'checkin', print: '02-checkin', ...items.checkin },
+  { key: 'bible', print: '06-biblia', ...items.bible },
+] as const;
+---
+
+<section id={ANCHORS.features} class="section" data-section="Features" data-lang={lang}>
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow">{features.eyebrow}</p>
+      <h2 class="heading">{features.title}</h2>
+      <p class="lead">{features.intro}</p>
+    </header>
+
+    <div class="grid">
+      {
+        cards.map((c) => (
+          <article class={`card item item--${c.key}`}>
+            <div class="copy">
+              <h3 class="subheading">{c.title}</h3>
+              <p>{c.body}</p>
+            </div>
+            <div class="shot">
+              <PhoneShot lang={lang} name={c.print} alt={c.alt} width={260} crop="4 / 5" />
+            </div>
+          </article>
+        ))
+      }
+      <article class="card card--feature item item--formation">
+        <hr class="rule" />
+        <h3 class="heading">{items.formation.title}</h3>
+        <p>{items.formation.body}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: 20px;
+    max-width: 640px;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+  .grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .item--word,
+  .item--rosary,
+  .item--checkin,
+  .item--bible {
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+  .copy {
+    display: grid;
+    gap: 12px;
+  }
+  .shot {
+    margin-top: auto;
+    align-self: center;
+    width: min(260px, 100%);
+  }
+  .item--formation {
+    justify-content: center;
+    gap: 20px;
+    padding-block: clamp(40px, 6vw, 64px);
+  }
+  .item--formation .rule {
+    width: 100%;
+  }
+  .item--formation p {
+    max-width: 52ch;
+  }
+
+  @media (min-width: 640px) {
+    .item--bible {
+      flex-direction: row;
+      align-items: stretch;
+      gap: 32px;
+    }
+    .item--bible .copy {
+      flex: 1;
+      align-content: start;
+    }
+    .item--bible .shot {
+      flex: none;
+      align-self: flex-end;
+      margin-top: 0;
+    }
+  }
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    .item--word,
+    .item--rosary,
+    .item--checkin {
+      grid-column: span 2;
+    }
+    .item--bible,
+    .item--formation {
+      grid-column: span 3;
+    }
+  }
+</style>

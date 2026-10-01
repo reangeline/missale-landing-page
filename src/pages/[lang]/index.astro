@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Day from '../../components/sections/Day.astro';
+import Gratitude from '../../components/sections/Gratitude.astro';
+import Features from '../../components/sections/Features.astro';
+import Guidance from '../../components/sections/Guidance.astro';
+import Privacy from '../../components/sections/Privacy.astro';
+import Pricing from '../../components/sections/Pricing.astro';
+import Faq from '../../components/sections/Faq.astro';
+import { getContent } from '../../i18n/content';
+import { LANGS, type Lang } from '../../i18n/routes';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = getContent(lang);
+---
+
+<Base lang={lang} page="home" title={t.meta.title} description={t.meta.description}>
+  <!-- O pôster do vídeo é o maior elemento da primeira tela. -->
+  <link slot="head" rel="preload" as="image" href={`/video/poster-${lang}.jpg`} fetchpriority="high" />
+  <Hero lang={lang} t={t} />
+  <Day lang={lang} t={t} />
+  <Gratitude lang={lang} t={t} />
+  <Features lang={lang} t={t} />
+  <Guidance lang={lang} t={t} />
+  <Privacy lang={lang} t={t} />
+  <Pricing lang={lang} t={t} />
+  <Faq lang={lang} t={t} />
+</Base>

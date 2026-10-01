@@ -1,0 +1,183 @@
+---
+import type { Content } from '../../content/schema';
+import type { Lang } from '../../i18n/routes';
+import StoreButton from '../StoreButton.astro';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+
+const { lang, t } = Astro.props;
+const h = t.hero;
+const periods = ['neutral', 'morning', 'afternoon', 'night'] as const;
+const captionId = `hero-video-caption-${lang}`;
+---
+
+<section class="section hero" data-section="Hero" data-lang={lang}>
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <p class="hero__greeting">
+        {periods.map((p) => <span data-when={p}>{h.greeting[p]}</span>)}
+      </p>
+      <h1 class="display">{h.title}</h1>
+      <p class="lead hero__lead">{h.subtitle}</p>
+      <div class="hero__line">
+        <span class="rule" aria-hidden="true"></span>
+        <p>
+          {periods.map((p) => <span data-when={p}>{h.line[p]}</span>)}
+        </p>
+      </div>
+      <StoreButton lang={lang} section="hero" />
+    </div>
+
+    <figure class="card card--feature hero__media" data-hero-video>
+      <video
+        class="hero__video"
+        muted
+        loop
+        playsinline
+        preload="none"
+        controls
+        poster={`/video/poster-${lang}.jpg`}
+        width="720"
+        height="1280"
+        aria-describedby={captionId}
+      >
+        <source src={`/video/hero-${lang}.mp4`} type="video/mp4" />
+      </video>
+      <button
+        type="button"
+        class="btn btn--quiet hero__toggle"
+        hidden
+        data-label-pause={h.video.pause}
+        data-label-play={h.video.play}
+      >
+        {h.video.pause}
+      </button>
+      <figcaption class="ui hero__caption" id={captionId}>{h.video.caption}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(48px, 7vw, 88px);
+  }
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .hero__greeting {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 28px;
+    line-height: 1.2;
+    color: var(--muted);
+  }
+  .hero__lead {
+    max-width: 34em;
+  }
+  .hero__line {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 34em;
+  }
+  .hero__line .rule {
+    width: 48px;
+  }
+  .hero__line p {
+    font-size: 21px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .hero__media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero__video {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    background: var(--surface-deep);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+  .hero__toggle[hidden] {
+    display: none;
+  }
+  .hero__caption {
+    color: var(--muted);
+    text-align: center;
+  }
+  @media (max-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-hero-video]');
+  const video = root?.querySelector('video');
+  const button = root?.querySelector<HTMLButtonElement>('.hero__toggle');
+
+  if (root && video && button) {
+    video.removeAttribute('controls');
+    button.hidden = false;
+
+    let userPaused = false;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const sync = () => {
+      const playing = !video.paused;
+      button.textContent = playing ? button.dataset.labelPause! : button.dataset.labelPlay!;
+    };
+    const play = () => {
+      video.play().catch(() => {});
+    };
+
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+
+    button.addEventListener('click', () => {
+      if (video.paused) {
+        userPaused = false;
+        play();
+      } else {
+        userPaused = true;
+        video.pause();
+      }
+      sync();
+    });
+
+    if (reduced) {
+      userPaused = true;
+    } else if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            if (!userPaused) play();
+          } else {
+            video.pause();
+          }
+        },
+        { threshold: 0.5 },
+      ).observe(video);
+    }
+    sync();
+  }
+</script>

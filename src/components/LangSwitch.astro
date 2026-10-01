@@ -1,0 +1,71 @@
+---
+import { LANGS, LANG_LABELS, pathFor, type Lang, type Page } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  page: Page;
+  label: string;
+}
+
+const { lang, page, label } = Astro.props;
+---
+
+<nav class="lang-switch" aria-label={label}>
+  {
+    LANGS.map((code) => {
+      const current = code === lang;
+      return (
+        <a
+          href={pathFor(code, page)}
+          hreflang={code}
+          lang={code}
+          title={LANG_LABELS[code].name}
+          aria-current={current ? 'true' : undefined}
+          data-lang-choice={code}
+          class:list={['ui', { current }]}
+        >
+          {LANG_LABELS[code].short}
+          <span class="sr-only">{LANG_LABELS[code].name}</span>
+        </a>
+      );
+    })
+  }
+</nav>
+
+<script>
+  document.addEventListener('click', (e) => {
+    const a = (e.target as Element | null)?.closest<HTMLElement>('[data-lang-choice]');
+    if (!a) return;
+    try {
+      localStorage.setItem('missale:lang', a.dataset.langChoice ?? '');
+    } catch {
+      /* sem armazenamento: segue o link normalmente */
+    }
+  });
+</script>
+
+<style>
+  .lang-switch {
+    display: flex;
+    align-items: center;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 40px;
+    padding-inline: 8px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  a.current {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+</style>
