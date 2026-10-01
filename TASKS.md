@@ -261,12 +261,6 @@ Fonte: `SPEC.md` (aprovado em 2026-10-01). Orçamento externo aprovado (vídeo):
     dig +short missaleapp.com MX → eforward1–5.registrar-servers.com (idêntico ao de antes)
     dig +short missaleapp.com TXT → "v=spf1 include:spf.efwd.registrar-servers.com ~all" (idêntico ao de antes)
     ```
-    ```
-    Feito na Vercel: missaleapp.com e www.missaleapp.com adicionados ao projeto; www redireciona (308) para o apex.
-    Registros pedidos pela Vercel: A @ → 216.198.79.1 · CNAME www → 2705bd57fcad7af2.vercel-dns-017.com.
-    Registros atuais salvos em docs/dns-antes.md (A @ 192.64.119.241, CNAME www parkingpage.namecheap.com, MX eforward*, TXT SPF).
-    BLOQUEIO: a Namecheap pediu usuário e senha no Chrome (sessão não estava ativa) e eu não digito senhas. Falta o Renato entrar na conta para eu alterar os dois registros, ou alterá-los ele mesmo.
-    ```
 
 - [x] T19 — Verificação em produção
   - agente: mecanico (haiku)
@@ -279,8 +273,4 @@ Fonte: `SPEC.md` (aprovado em 2026-10-01). Orçamento externo aprovado (vídeo):
     200 https://missaleapp.com · /pt · /en · /es · /pt/termos · /en/terms · /es/terminos
     /_vercel/insights/script.js → 200 (Web Analytics ativo)
     Lighthouse mobile em https://missaleapp.com: pt {performance 100, accessibility 100, best-practices 100, seo 100} LCP 1.5 s · en {99, 100, 100, 100} LCP 1.8 s · es {99, 100, 100, 100} LCP 2.0 s
-    ```
-    ```
-    Parcial (domínio da Vercel): 200 nas 3 homes e nas 9 páginas legais; Lighthouse mobile em produção ≥ 99 em desempenho e 100 em acessibilidade nos 3 idiomas.
-    BLOQUEIO: as URLs de missaleapp.com cadastradas no ASO só respondem depois do DNS (T18).
     ```
