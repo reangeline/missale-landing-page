@@ -7,7 +7,7 @@ Landing page estática do app Missale (missaleapp.com) em PT, EN e ES.
 - Sem framework de UI (sem React/Vue/Svelte/Tailwind). JS mínimo.
 
 ## Deploy
-- Vercel pela integração Git, sem adapter.
+- Vercel pela integração Git, sem adapter. `vercel.json` só fixa o preset (Astro), URLs sem barra final e sem `.html`.
 - `main` = produção, `develop` = integração, previews nas demais branches.
 - CI no GitHub Actions (`.github/workflows/ci.yml`), Node 24.
 
