@@ -219,30 +219,55 @@ Fonte: `SPEC.md` (aprovado em 2026-10-01). Orçamento externo aprovado (vídeo):
 
 ## Fase D — Publicação
 
-- [ ] T16 — GitHub: branches, PR e CI verde
+- [x] T16 — GitHub: branches, PR e CI verde
   - agente: sessão principal (ação externa)
   - depende de: T15
   - aceite: branch `develop` criada no remoto; PR da branch de trabalho para `develop` com o CI verde e merge feito; PR `develop` → `main` com CI verde e merge feito.
   - verificar: `gh run list --workflow ci.yml --limit 5`
   - evidência:
+    ```
+    gh run list --workflow ci.yml --limit 5
+    completed success Merge pull request #2 from reangeline/develop — main — push — 30s
+    completed success Publica a landing page do Missale — develop — pull_request — 37s
+    completed success Merge pull request #1 from reangeline/reangeline/missale-landing-page — develop — push — 30s
+    completed success Landing page do Missale (PT, EN, ES) — pull_request — 21s
+    PR #1 (trabalho → develop) e PR #2 (develop → main) com merge feito; branch develop criada no remoto.
+    ```
 
-- [ ] T17 — Projeto na Vercel e deploy de produção
+- [x] T17 — Projeto na Vercel e deploy de produção
   - agente: sessão principal (ação externa)
   - depende de: T16
   - aceite: projeto `missale-landing-page` no mesmo time do hirefy, ligado ao repo do GitHub, `main` como produção; Web Analytics ativado; deploy de produção pronto a partir do commit de `main`.
   - verificar: `vercel ls missale-landing-page --prod | head` + `curl -sI <url de produção>/pt | head -1`
   - evidência:
+    ```
+    Projeto missale-landing-page criado em reangelinehotmailcoms-projects (prj_wrLBylMcwDsHbf0n43BHlfsin3wQ), ligado a github.com/reangeline/missale-landing-page, productionBranch: main, Node 24.x; vercel.json fixa o preset Astro.
+    vercel ls --prod → https://missale-landing-page-d3llkp84s-…vercel.app ● Ready (commit do merge em main)
+    curl https://missale-landing-page.vercel.app → 200 em /, /pt, /en, /es, nas 9 páginas legais, /sitemap.xml, /robots.txt, /og.png, /video/hero-pt.mp4; /pt/ → 308 /pt
+    Web Analytics: POST /web/insights/toggle → {"value":true}
+    Lighthouse mobile em produção (vercel.app): pt {performance 99, accessibility 100} · en {100, 100} · es {99, 100}; LCP 1.8 s
+    ```
 
-- [ ] T18 — Domínio missaleapp.com (Namecheap → Vercel)
+- [!] T18 — Domínio missaleapp.com (Namecheap → Vercel)
   - agente: sessão principal (ação externa, DNS)
   - depende de: T17
   - aceite: registros atuais salvos em `docs/dns-antes.md` antes de qualquer mudança; só A/CNAME de `@` e `www` alterados para os valores indicados pela Vercel; MX/TXT intactos; `missaleapp.com` como domínio principal e `www` redirecionando (308).
   - verificar: `curl -sI https://missaleapp.com | head -1; curl -sI https://www.missaleapp.com | grep -iE "^HTTP|^location"; dig +short missaleapp.com MX; dig +short missaleapp.com TXT`
   - evidência:
+    ```
+    Feito na Vercel: missaleapp.com e www.missaleapp.com adicionados ao projeto; www redireciona (308) para o apex.
+    Registros pedidos pela Vercel: A @ → 216.198.79.1 · CNAME www → 2705bd57fcad7af2.vercel-dns-017.com.
+    Registros atuais salvos em docs/dns-antes.md (A @ 192.64.119.241, CNAME www parkingpage.namecheap.com, MX eforward*, TXT SPF).
+    BLOQUEIO: a Namecheap pediu usuário e senha no Chrome (sessão não estava ativa) e eu não digito senhas. Falta o Renato entrar na conta para eu alterar os dois registros, ou alterá-los ele mesmo.
+    ```
 
-- [ ] T19 — Verificação em produção
+- [!] T19 — Verificação em produção
   - agente: mecanico (haiku)
   - depende de: T18
   - aceite: as 6 URLs de `$G/aso/metadata/*/{support,privacy}_url.txt` e as 3 home pages respondem 200; Lighthouse mobile em produção ≥ 95 em desempenho e acessibilidade em `/pt`, `/en`, `/es`.
   - verificar: `for u in $(cat $G/aso/metadata/*/{support,privacy}_url.txt) https://missaleapp.com/{pt,en,es}; do echo "$(curl -s -o /dev/null -w '%{http_code}' $u) $u"; done` + Lighthouse
   - evidência:
+    ```
+    Parcial (domínio da Vercel): 200 nas 3 homes e nas 9 páginas legais; Lighthouse mobile em produção ≥ 99 em desempenho e 100 em acessibilidade nos 3 idiomas.
+    BLOQUEIO: as URLs de missaleapp.com cadastradas no ASO só respondem depois do DNS (T18).
+    ```
