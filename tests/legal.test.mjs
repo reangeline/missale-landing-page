@@ -21,9 +21,9 @@ const read = (p) => readFileSync(p.file, 'utf8');
 const NEW = 'hi@missaleapp.com';
 
 for (const p of pages) {
-  test(`${p.lang}/${p.slug}: existe, sem e-mail antigo nem rascunho, com crise`, () => {
+  test(`${p.lang}/${p.slug}: existe, sem e-mail antigo (ola, erros, acesso) nem rascunho, com crise`, () => {
     const html = read(p);
-    assert.ok(!html.includes('ola@missale.app'));
+    assert.ok(!/(ola|erros|acesso)@missale\.app/.test(html));
     assert.ok(!/Rascunho|Borrador|Draft/.test(html));
     assert.ok(html.includes('id="help"'));
     assert.ok(html.includes(crisis[p.lang].title));
