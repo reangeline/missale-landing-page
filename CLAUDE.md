@@ -44,3 +44,6 @@ CSS puro em `src/styles/`: `tokens.css` (variáveis em `:root`), `fonts.css` (`@
 - Vercel Web Analytics só entra quando `process.env.VERCEL === '1'` no build. Nenhum outro script de terceiros.
 - `sitemap.xml` vem de `src/pages/sitemap.xml.ts` (13 URLs com hreflang); `public/robots.txt` aponta para ele.
 - `scripts/check-dist.mjs [dir]` falha (no `npm test`) se achar trackers, `aggregateRating`, expressões "nunca dizer" (homes e suporte) ou símbolos de preço (homes). `tests/dist.test.mjs` o roda e refaz um build com ID da loja em diretório temporário.
+
+## Textos legais
+`src/content/legal/` é cópia fiel dos textos do app. Para atualizar: `APP=<checkout do holy_messages na branch develop atualizada> bash scripts/sync-legal.sh` (o caminho padrão do script pode estar numa branch antiga). Depois confira se a copy da home (`guidance`, `privacy`, `faq`) continua batendo com a política.

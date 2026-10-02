@@ -106,8 +106,8 @@
   },
   "guidance": {
     "eyebrow": "How guidance works",
-    "title": "The AI chooses. It does not invent.",
-    "intro": "Guidance in Missale is not a conversation. It is a choice among Catholic responses that have already been reviewed.",
+    "title": "The AI chooses from the collection and writes a short reflection.",
+    "intro": "Guidance starts from what you write. One AI chooses, among Catholic responses that have already been reviewed, the Psalm, the saint and the step. Another writes a short reflection from them.",
     "steps": [
       {
         "title": "You write",
@@ -115,11 +115,11 @@
       },
       {
         "title": "The app chooses",
-        "body": "From 720 reviewed Catholic responses, 240 per language, the AI picks the one that fits your text best. It writes nothing new."
+        "body": "From 720 reviewed Catholic responses, 240 per language, an AI picks the one that fits your text best."
       },
       {
         "title": "You receive",
-        "body": "A Psalm, a saint who went through something similar, and one concrete step for the day."
+        "body": "A Psalm, a saint who went through something similar, one concrete step for the day, and a short reflection written by AI from them."
       }
     ],
     "care": "If what you write shows a sign of risk to life, the app shows crisis guidance first.",
@@ -133,11 +133,11 @@
     "exceptions": [
       {
         "title": "Guidance",
-        "body": "The text you write leaves your device only when you tap the button to receive guidance. We do not store that text."
+        "body": "The text you write leaves your device only when you tap the button to receive guidance. It goes to AI services from other companies, which choose the response from the collection and write the reflection. We do not store that text."
       },
       {
         "title": "Personalization",
-        "body": "For subscribers with personalization turned on, a few texts are sent out to choose what to show: the Rosary intention, your Examen answers, the morning intention and, for the Word of the day, your latest \"Today I am…\" entry. This only starts after you allow it, and you can turn it off in Settings. In both cases, the text is used only to choose something from the reviewed collection."
+        "body": "For subscribers with personalization turned on, a few texts are sent out to choose what to show: the Rosary intention, your Examen answers, the morning intention and, for the Word of the day, your latest \"Today I am…\" entry. This only starts after you allow it, and you can turn it off in Settings. Here the text is used only to choose something from the reviewed collection."
       }
     ],
     "points": [
@@ -199,7 +199,7 @@
       },
       {
         "q": "Where does the content come from?",
-        "a": "From Catholic and public-domain sources, always with the reference. The guidance responses are reviewed, and the AI only chooses among them. New content arrives without you having to update the app."
+        "a": "From Catholic and public-domain sources, always with the reference. In guidance, the Psalm, the saint and the step come from a reviewed collection, and the short reflection that goes with them is written by AI. New content arrives without you having to update the app."
       }
     ]
   },
