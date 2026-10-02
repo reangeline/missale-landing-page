@@ -106,8 +106,8 @@
   },
   "guidance": {
     "eyebrow": "Como a orientação funciona",
-    "title": "A IA escolhe. Ela não inventa.",
-    "intro": "A orientação do Missale não é uma conversa. É uma escolha entre respostas católicas já revisadas.",
+    "title": "A IA escolhe no acervo e escreve uma reflexão curta.",
+    "intro": "A orientação parte do que você escreve. Uma IA escolhe, entre respostas católicas já revisadas, o salmo, o santo e o passo. Outra escreve uma reflexão curta a partir deles.",
     "steps": [
       {
         "title": "Você escreve",
@@ -115,11 +115,11 @@
       },
       {
         "title": "O app escolhe",
-        "body": "Entre 720 respostas católicas revisadas, 240 por idioma, a IA escolhe a que mais combina com o seu texto. Ela não escreve nada novo."
+        "body": "Entre 720 respostas católicas revisadas, 240 por idioma, uma IA escolhe a que mais combina com o seu texto."
       },
       {
         "title": "Você recebe",
-        "body": "Um salmo, um santo que passou por algo parecido e um passo concreto para o dia."
+        "body": "Um salmo, um santo que passou por algo parecido, um passo concreto para o dia e uma reflexão curta, escrita por IA a partir deles."
       }
     ],
     "care": "Se o que você escrever trouxer sinal de risco à vida, o app mostra primeiro a orientação de crise.",
@@ -133,11 +133,11 @@
     "exceptions": [
       {
         "title": "A orientação",
-        "body": "O texto que você escreve sai do aparelho só quando você toca no botão para receber a orientação. Nós não guardamos esse texto."
+        "body": "O texto que você escreve sai do aparelho só quando você toca no botão para receber a orientação. Ele vai para serviços de IA de outras empresas, que escolhem a resposta no acervo e escrevem a reflexão. Nós não guardamos esse texto."
       },
       {
         "title": "A personalização",
-        "body": "Para assinantes com a personalização ligada, alguns textos saem para escolher o que mostrar: a intenção do Terço, as respostas do Exame, a intenção da manhã e, para a Palavra do dia, o último registro do \"Hoje eu estou…\". Isso só começa depois que você permite, e você pode desligar em Ajustes. Nas duas exceções, o texto serve só para escolher algo no acervo revisado."
+        "body": "Para assinantes com a personalização ligada, alguns textos saem para escolher o que mostrar: a intenção do Terço, as respostas do Exame, a intenção da manhã e, para a Palavra do dia, o último registro do \"Hoje eu estou…\". Isso só começa depois que você permite, e você pode desligar em Ajustes. Aqui o texto serve só para escolher algo no acervo revisado."
       }
     ],
     "points": [
@@ -199,7 +199,7 @@
       },
       {
         "q": "De onde vem o conteúdo?",
-        "a": "De fontes católicas e de domínio público, sempre com a referência. As respostas da orientação são revisadas, e a IA só escolhe entre elas. Conteúdo novo chega sem você precisar atualizar o app."
+        "a": "De fontes católicas e de domínio público, sempre com a referência. Na orientação, o salmo, o santo e o passo vêm de um acervo revisado, e a reflexão curta que os acompanha é escrita por IA. Conteúdo novo chega sem você precisar atualizar o app."
       }
     ]
   },
